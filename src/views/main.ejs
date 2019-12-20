@@ -1,0 +1,20 @@
+<html>
+<head>
+<body>
+<!-- views/pages/index.ejs -->
+
+<table border="5">
+  <tr>
+    <td>
+      <% student.forEach(function(student) { %>
+    </td>
+  </tr>
+  <td><%= student.name %></td>
+  <td><%= student.surname %></td>
+  <td><%= student.city%></td>
+  <% }); %>
+
+</table>
+</body>
+</head>
+</html>
