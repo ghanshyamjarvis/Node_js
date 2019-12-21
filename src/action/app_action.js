@@ -4,7 +4,8 @@ module.exports= {
       {name: "ram", id: "002", dept: "admin"},
       {name: "raj", id: "003", dept: "security"}
     ]
-    res.render("../views/main.ejs", {person: person})
+    res.render("../views/main",
+      {person: person})
 
   }
 }

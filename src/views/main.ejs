@@ -1,12 +1,19 @@
 <html>
 <head>
   <body>
-<table>
-  <%= person.forEach(function () {%>
-   <%= person.name %>
-    <%= person.id %>
-  <%= person.dept%>
-  })
+<table border="5">
+
+
+<tr>
+    <td>
+      <%= person.forEach(function (person) { %>
+    </td>
+  </tr>
+  <td><%= person.name %></td>
+  <td><%= person.id %></td>
+  <td><%= person.dept %></td>
+  <%})%>
+
 </table>
 </body>
 </head>
