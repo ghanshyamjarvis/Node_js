@@ -24,9 +24,9 @@ app.listen(3000,()=> console.log('Port connected at 3000'))
 app.get('/createdb',(req,res) =>{
   const sql ='create database company';
   db.query(sql,(err,result) => {
-      if (err) throw err;
-      console.log(result);
-      res.send("company database created");
+    if (err) throw err;
+    console.log(result);
+    res.send("company database created");
   })
 });
 
@@ -52,47 +52,47 @@ app.get('/products',(req,res) =>{
 // Insert Data into user table using Array
 app.get('/user_tb_data',(req,res) => {
   const record = [[71, 'John', 154],
-                [81,'shyam',155],
-                [91,'Raj',156],
-                [101,'Ramesh',157],
-                [111,'Sita',158]];
-    const sql = 'insert into users(id,name,favorite_product) values ?';
-    db.query(sql,[record],function (err, result) {
-      if (err) throw err;
-      console.log(result);
-      res.send("users table Insert data ");
-});
+    [81,'shyam',155],
+    [91,'Raj',156],
+    [101,'Ramesh',157],
+    [111,'Sita',158]];
+  const sql = 'insert into users(id,name,favorite_product) values ?';
+  db.query(sql,[record],function (err, result) {
+    if (err) throw err;
+    console.log(result);
+    res.send("users table Insert data ");
+  });
 });
 
 
 
 //Insert Data into product table
-    app.get('/product_rec',(req,res) => {
-    const record =[[1541,'Chocolate Heaven'],
-                    [ 115,'Tasty Lemons' ],
-                    [ 1156, 'Vanilla Dreams']
-                  ];
-      const sql = 'insert into products (id,name) values ?';
-      db.query(sql,[record],function (err,result) {
-      if (err) throw err;
-      console.log(result)
-        res.send("insert data into product table")
-    });
+app.get('/product_rec',(req,res) => {
+  const record =[[1541,'Chocolate Heaven'],
+    [ 115,'Tasty Lemons' ],
+    [ 1156, 'Vanilla Dreams']
+  ];
+  const sql = 'insert into products (id,name) values ?';
+  db.query(sql,[record],function (err,result) {
+    if (err) throw err;
+    console.log(result)
+    res.send("insert data into product table")
   });
+});
 
 // join table
-  app.get('/joinnn',(req,res) => {
-    const sql = "SELECT users.name, products.name FROM users JOIN products ON users.favorite_product = products.id";
-    db.query(sql,function (err,result) {
-      if (err){
-        throw err;
-      }
-      console.log(result)
-      res.send("Simple Join data where id match in both tables")
-    })
-  });
+app.get('/joinnn',(req,res) => {
+  const sql = "SELECT users.name, products.name FROM users JOIN products ON users.favorite_product = products.id";
+  db.query(sql,function (err,result) {
+    if (err){
+      throw err;
+    }
+    console.log(result)
+    res.send("Simple Join data where id match in both tables")
+  })
+});
 
-  //update data into user table
+//update data into user table
 app.get('/upt_usr_tbl_data/:id',(req,res)=>{
   const updt_data = "000";
   const sql = `update users SET '${updt_data}' where id = ${req.params.id}`;
@@ -126,6 +126,15 @@ app.get("/Right_join",(req,res)=>{
   })
 });
 
+// Shows User Table Data
+app.get("/select_user",(req,res)=>{
+  const sql ='select * from users';
+  db.query(sql,function (err,result) {
+    if (err)throw err;
+    console.log(result);
+    res.send(result)
+  })
+});
 
 
 
