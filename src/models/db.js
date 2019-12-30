@@ -4,7 +4,7 @@ const connection = mysql.createConnection({
     host:"localhost",
     user:"root",
     password:"password",
-    database:"Emp_details" //disable when create database
+    database:"Emp_details" //disable while creating database
 })
 connection.connect();
 console.log("Connection Done")
