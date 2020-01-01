@@ -5,9 +5,12 @@ const UserAction = require('../action/app_action');
 
 
 router.post('/db_creation', UserAction.db_create);
-router.post('/tbl_creation',UserAction.emp_tbl_creation);
-router.post('/insert_data',UserAction.insert_data_emp);
-router.post('/add_field',UserAction.add_date_field);
+router.post('/tbl_creation',UserAction.createtable);
+router.post('/insert_data',UserAction.insert);
+router.post('/add_field',UserAction.addfield);
+router.post('/usr_login',UserAction.userLogin);
+router.post('/delete_record/:id',UserAction.delete);
+
 
 
 module.exports = router;

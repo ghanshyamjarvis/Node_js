@@ -28,16 +28,12 @@ module.exports = {
   },
 
   insert_data_emp:function (data) {
-
      data['Created_At']= moment().format('yyyy-mm-dd hh:mm:ss');
      data['Update_At']= moment().format('yyyy-mm-dd hh:mm:ss');
      data['Emp_password'] = sha1(data['Emp_password']);
-    // //console.log("data------------------",data.Emp_id)
     return new Promise((resolve)=>{
       const sql =`INSERT INTO emp(Emp_id,Emp_name,Emp_city,Emp_Email,Emp_password,Created_At,Update_At) VALUES(?,?,?,?,?,?,?)`;
       connection.query(sql,[data.Emp_id,data.Emp_name,data.Emp_city,data.Emp_Email,data.Emp_password,data.Created_At,data.Update_At],(error,data)=>{
-       // resolve((error) ? false : data);
-        (error) && console.log('User update----------: ', error);
        resolve((error) ? [] : (data == null) ? [] : data)
       })
     })
@@ -53,14 +49,27 @@ module.exports = {
   },
 
   find_email:function (email) {
-    console.log('email-----------',email);
     return new Promise((resolve )=>{
       const sql = 'select * from emp where Emp_Email = ?';
       connection.query(sql,[email],(error,data)=>{
-        //console.log('datasssssssssss',data);
         resolve((error) ? false : data)
       })
     })
+  },
+  findByCredential: function (Emp_Email, Emp_password) {
+    return new Promise((resolve) => {
+      let sql = 'SELECT * FROM emp WHERE (Emp_Email = ? AND Emp_password = ?)';
+      connection.query(sql, [Emp_Email, sha1(Emp_password)], (error, data) => {
+        resolve((error) ? {} : (data == null) ? {} : data);
+      })
+    })
+  },
+  deletection : function (id) {
+    return new Promise((resolve )=>{
+      const sql = 'DELETE FROM emp where Emp_id = ?';
+      connection.query(sql,[id],(error,data)=>{
+        resolve((error) ? {} : (data == null) ? {} : data);
+      })
+    })
   }
-
 }
