@@ -34,6 +34,13 @@ module.exports={
         res.json({status:false,message:"fail"})
       })
   },
+
+  getAll: function (req,res){
+      UserModel.getAll().then(async (show_record) => {
+        res.json({status:true,data:show_record,message:"all record"})
+      })
+  },
+
   addfield: function (req,res) {
     UserModel.add_date_field().then(async (add_fields)=>{
       res.json({status:true, data:add_fields, message:"add column"})
@@ -43,11 +50,12 @@ module.exports={
   userLogin: async function (req, res) {
     const {Emp_Email, Emp_password} = req.body;
     UserModel.findByCredential(Emp_Email, Emp_password).then(async (finRes) => {
-      //console.log("find ersponce",finRes)
+      console.log("find ersponce",finRes)
         if (Object.keys(finRes).length > 0) {
             //finRes.password = '';
             jwt.sign({finRes}, config.secretKey, (error, token) => {
-              finRes['tokenfield'] = token;
+              finRes[0]['token'] = token; //token field add here
+              console.log("tokennnn",token);
               res.json({status: true, message: 'Key Generate', data: finRes});
             })
           }else {
@@ -57,8 +65,9 @@ module.exports={
   },
   //Delete record
   delete: function (req, res) {
-    UserModel.deletection(req.params['id']).then(async (delete_record) => {
-      if (Object.keys(delete_record).length > 0) {
+    UserModel.findById(req.params.id).then(async (delete_res) => {
+       console.log("idddddd",delete_res);
+      if (Object.keys(delete_res).length > 0) {
         res.json({status: true, message:" Deleted successfully"});
       } else {
         res.json({
