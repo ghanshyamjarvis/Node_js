@@ -56,9 +56,10 @@ module.exports = {
       })
     })
   },
+
   findByCredential: function (Emp_Email, Emp_password) {
     return new Promise((resolve) => {
-      let sql = 'SELECT * FROM emp WHERE (Emp_Email = ? AND Emp_password = ?)';
+      let sql = `SELECT * FROM emp WHERE (Emp_Email = ? AND Emp_password = ?)`;
       connection.query(sql, [Emp_Email, sha1(Emp_password)], (error, data) => {
         resolve((error) ? {} : (data == null) ? {} : data);
       })
