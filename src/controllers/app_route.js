@@ -10,7 +10,7 @@ router.post('/insert', UserAction.insert);
 router.get('/getAll', UserAction.getAll);
 router.get('/getById/:id', UserAction.getById);
 router.put('/updateById/:id', UserAction.updateById);
-router.delete('/deleteById/:id', UserAction.deleteById);
+router.delete('/deleteById/:id', Auth.verifyToken, UserAction.deleteById);
 router.post('/addcolumn', UserAction.addcolumn);
 router.post('/userLogin', UserAction.userLogin);
 
