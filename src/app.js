@@ -3,16 +3,20 @@ const router = express.Router();
 const app = express();
 const connection = require("./models/db");
 const route = require("./controllers/app_route");
-const bodyParser = ('body-parser');
 const path = require('path');
+const bodyParser = require('body-parser');
 
+
+app.use(bodyParser.urlencoded({ extended: true }));
 //set views file
 app.set('views', path.join(__dirname,'views'));
 //set view engine
 app.set('view engine', 'ejs');
-
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// var urlencodedParser = bodyParser.urlencoded({ extended: false });
 // get all data
-app.get('/main',(req, res) => {
+app.get('/',(req, res) => {
   let sql = "SELECT * FROM details";
   let query = connection.query(sql, (err, results) => {
     if(err) throw err;
@@ -22,27 +26,45 @@ app.get('/main',(req, res) => {
   });
 });
 
+app.get('/add',(req, res) => {
+    res.render('add',{
+    });
+});
+
+app.get('/edit',(req, res) => {
+  // console.log(req.query);
+  let sql = "SELECT * FROM details where email = ?";
+  let query = connection.query(sql, req.query.email, (err, results) => {
+    console.log(results);
+    if(err) throw err;
+    res.render('edit',{
+      results: results
+    });
+  });
+});
+
 //route for insert data
-app.post('/save',(req, res) => {
-  let data = {FirstName: req.body.Firstname, LastName: req.body.Lastname, Email: req.body.Email, Password: req.body.Password};
+app.post('/add', (req, res) => {
+  console.log(req.body);
+  let data = {firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, password: req.body.password};
   let sql = "INSERT INTO details SET ?";
   let query = connection.query(sql, data,(err, results) => {
     if(err) throw err;
-    res.redirect('/ ');
+    res.redirect('/');
   });
 });
 //route for update data
-app.post('/update',(req, res) => {
-  let sql = "UPDATE details SET FirstName='"+req.body.FirstName+"', LastName='"+req.body.LastName+"', Password='"+req.body.Password+"' WHERE product_id="+req.body.id;
-  let query = conn.query(sql, (err, results) => {
+app.post('/edit',(req, res) => {
+  let sql = "UPDATE details SET firstname='"+req.body.firstname+"', lastname='"+req.body.lastname+"', password='"+req.body.password+"' WHERE email='"+req.body.email + "'";
+  let query = connection.query(sql, (err, results) => {
     if(err) throw err;
     res.redirect('/');
   });
 });
 //route for delete data
-app.post('/delete',(req, res) => {
-  let sql = "DELETE FROM details WHERE Email="+req.body.Email+"";
-  let query = connection.query(sql, (err, results) => {
+app.get('/delete',(req, res) => {
+  let sql = "DELETE FROM details WHERE email=?";
+  let query = connection.query(sql,req.query.email, (err, results) => {
     if(err) throw err;
     res.redirect('/');
   });
