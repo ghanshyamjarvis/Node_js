@@ -1,7 +1,7 @@
 const connection = require ('../models/db');
 const UserModel = require('../models/user_model');
 const jwt = require('jsonwebtoken');
-const config =require('../config');
+// const config =require('../config');
 const randToken = require('rand-token');
 const userEmail = require('../services/email')
 
@@ -104,7 +104,7 @@ module.exports= {
     UserModel.findByCredential(email, password).then(async (finRes) => {
      // console.log("find ersponce", finRes)
       if (Object.keys(finRes).length > 0) {
-        jwt.sign({finRes}, config.secretKey, (error, token) => {
+        jwt.sign({finRes}, 'sss', (error, token) => {
           finRes[0]['token'] = token; //token field add here
           console.log("tokennnn",token);
           res.json({status: true, message: 'Key Generate', data: finRes});
@@ -152,7 +152,7 @@ module.exports= {
   },
 
   accountActivate: function (req,res) {
-    const {verificationCode} = req.body;
+    const verificationCode = req.query.token;
     //const data = {verificationCode}
     //console.log("action data",data);
    // console.log("parmas",req.params);
@@ -160,7 +160,7 @@ module.exports= {
       //console.log("respoooooooooonse", verificationCode);
       userResponse[0]['verificationCode'] = '';
       //console.log("respoooooooooonse", userResponse);
-      UserModel.updateverificationCode(userResponse[0].user_id, userResponse[0].verificationCode).then((updateRes) => {
+      UserModel.updateverificationCode(userResponse[0].verificationCode, userResponse[0].user_id).then((updateRes) => {
        // console.log("update res", userResponse[0].verificationCode,userResponse[0].user_id);
         //console.log("update res", updateRes);
         //if (Object.keys(updateRes).length > 0){

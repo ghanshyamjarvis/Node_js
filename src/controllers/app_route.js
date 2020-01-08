@@ -4,7 +4,7 @@ const router = express.Router();
 const UserAction = require('../action/app_action');
 const Auth =require('../services/Auth')
 
-router.post ('/createdb', UserAction.createDB);
+router.post('/createdb', UserAction.createDB);
 router.post('/createTbl', UserAction.createTbl);
 router.post('/insert', UserAction.insert);
 router.get('/getAll', UserAction.getAll);
@@ -21,7 +21,7 @@ router.post('/leftjoin', UserAction.leftjoin);
 router.post('/rightjoin', UserAction.rightjoin);
 router.post('/crossjoin', UserAction.crossjoin);
 router.post('/accountActivate',UserAction.accountActivate);
-router.post('/accountActivate', UserAction.accountActivate);
+// router.post('/accountActivate', UserAction.accountActivate);
 
 
 

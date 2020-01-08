@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const config = require('../config');
+// const config = require('../config');
 
 /*const transporter = nodemailer.createTransport({
   service: config.mail.service,
@@ -22,7 +22,8 @@ const transporter = nodemailer.createTransport({
 module.exports = {
 
   activationsMail: function (data) {
-    const link = config.webhost + 'user/active/' + data.code;
+    const link = 'http://localhost:3000' + '/accountActivate?token=' + data.code;
+
     //console.log("code", data.code);
     const mailOptions = {
       from: '"Ecommerce" <noreply@ecommerce.com>', // sender add  ress

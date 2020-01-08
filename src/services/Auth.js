@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const config = require('../config');
+// const config = require('../config');
 
 module.exports = {
 
@@ -12,7 +12,7 @@ module.exports = {
         const  bearer =authorization.split(' ');
         // Get token from array
         const bearerToken = bearer[1];
-        jwt.verify(bearerToken, config.secretKey, (err, authData) => {
+        jwt.verify(bearerToken, 'sss', (err, authData) => {
           if (err) {
             return res.json({
               success: false,
