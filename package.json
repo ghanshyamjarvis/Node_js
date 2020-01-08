@@ -12,9 +12,12 @@
     "mysql": "^2.17.1",
     "nodemon": "^2.0.2",
     "path": "^0.12.7",
+    "rand-token": "^0.4.0",
     "sha1": "^1.1.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemailer": "^6.4.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
