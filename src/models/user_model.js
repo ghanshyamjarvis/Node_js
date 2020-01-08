@@ -77,7 +77,6 @@ module.exports = {
       })
     })
   },
-
   add_date_field: function () {
     return new Promise((resolve) => {
       const sql = "ALTER TABLE user ADD COLUMN Created_At DATETIME, ADD COLUMN Update_At DATETIME "
@@ -86,7 +85,6 @@ module.exports = {
       })
     })
   },
-
   findByCredential: function (email, password) {
     return new Promise((resolve) => {
       let sql = `SELECT * FROM user WHERE (email = ? AND password = ?)`;
@@ -95,8 +93,7 @@ module.exports = {
       })
     })
   },
-
-  find_email: function (email) {
+  findByEmailOrPhone: function (email) {
     return new Promise((resolve) => {
       const sql = 'select * from user where email = ?';
       connection.query(sql, [email], (error, data) => {
@@ -104,5 +101,28 @@ module.exports = {
       })
     })
   },
+
+  findByVerifyCode: function (verificationCode) {
+    //console.log("model verification", verificationCode);
+    return new Promise((resolve ) => {
+      const sql = 'select * from user WHERE verificationCode = ?';
+      connection.query(sql,[verificationCode], (error, data) => {
+        //console.log("data", data);
+        resolve((error) ? {} : (data == null) ? {} : data);
+
+      })
+    })
+  },
+
+  updateverificationCode: function (verificationCode, user_id) {
+    //console.log("mmmmmmmmmm",verificationCode, user_id);
+          return new Promise((resolve) => {
+            const sql = `UPDATE user SET verificationCode = ? WHERE user_id = ?`;
+            connection.query(sql,[verificationCode, user_id], (error, data) => {
+            console.log("model", data);
+              resolve((error) ? {} : (data == null) ? {} : data);
+            })
+          })
+  }
 
 }
