@@ -5,6 +5,7 @@ const connection = require("./models/db");
 const route = require("./controllers/app_route");
 const path = require('path');
 const bodyParser = require('body-parser');
+const sha1 = require('sha1');
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -43,14 +44,16 @@ app.get('/edit',(req, res) => {
 
 //route for insert data
 app.post('/add', (req, res) => {
-  console.log(req.body);
-  let data = {firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, password: req.body.password};
+  //console.log(req.body);
+  //data['password'] = sha1(data['password'])
+  let data = {firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, password: sha1(req.body.password)};
   let sql = "INSERT INTO details SET ?";
   let query = connection.query(sql, data,(err, results) => {
     if(err) throw err;
     res.redirect('/');
   });
 });
+
 //route for update data
 app.post('/edit',(req, res) => {
   let sql = "UPDATE details SET firstname='"+req.body.firstname+"', lastname='"+req.body.lastname+"', password='"+req.body.password+"' WHERE email='"+req.body.email + "'";
@@ -59,6 +62,7 @@ app.post('/edit',(req, res) => {
     res.redirect('/');
   });
 });
+
 //route for delete data
 app.get('/delete',(req, res) => {
   let sql = "DELETE FROM details WHERE email=?";
