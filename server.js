@@ -1,10 +1,8 @@
+const app = require('./src/app');
+const port = process.env.PORT || 3000;
 
-const express = require("express")
-const app = express()
+const  server = app.listen(port,function () {
+  console.log("Connected At " + port);
+});
 
-const user =[]
-app.get('./user',(req,res)=>{
-  res.json(user)
-})
-
-app.listen(3000)
+server.timeout = 30000;
