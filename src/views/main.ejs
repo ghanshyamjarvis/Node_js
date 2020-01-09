@@ -4,6 +4,7 @@
 </head>
 <h1>Uer list</h1>
 
+
 <table border="1">
     <th>FirstName</th> <th>Lastname</th> <th>Email</th> <th>Password</th> <th> Edit </th> <th> Delete </th>
     <tr><% results.forEach(function(result) { %></tr>
@@ -11,7 +12,14 @@
           <td><a href="/edit?email=<%= result.email %>"> Edit</a></td>
           <td><a href="/delete?email=<%= result.email %>"> Delete</a></td>
             <% }); %>
-<a href="/add">Add</a>
+  <a href="/add">Add</a>
 </table>
+<% if (locals.errors) { %>
+  <ul>
+    <% Object.values(errors).forEach(function(error){ %>
+      <li><%= error.msg %></li>
+    <% }); %>
+  </ul>
+<% } %>
 </body>
 </html>
