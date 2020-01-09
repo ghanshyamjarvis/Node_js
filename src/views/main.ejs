@@ -1,19 +1,20 @@
 <html>
 <head>
-  <title>Crud Operaction Into Database </title>
-  <style>
-  </style>
+   <title>Crud Operaction Into Database </title>
+    <style>
+
+    </style>
 </head>
 <body>
 
-<h1>User list</h1>
+<h1>Uer list</h1>
 <ul>
-  <% results.forEach(function(result) { %>
-    <li><%= result.firstname %> - <%= result.lastname %> - <%= result.email %> - <%= result.password %>
-      <a href="/edit?email=<%= result.email %>"> Edit</a>
-      <a href="/delete?email=<%= result.email %>"> Delete</a>
-    </li>
-  <% }); %>
+    <% results.forEach(function(result) { %>
+        <li><%= result.firstname %> - <%= result.lastname %> - <%= result.email %> - <%= result.password %>
+          <a href="/edit?email=<%= result.email %>"> Edit</a>
+          <a href="/delete?email=<%= result.email %>"> Delete</a>
+        </li>
+    <% }); %>
 </ul>
 
 <a href="/add">Add</a>
