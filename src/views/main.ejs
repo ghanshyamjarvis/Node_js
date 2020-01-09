@@ -1,20 +1,21 @@
 <html>
 <head>
-   <title>Crud Operaction Into Database </title>
-    <style>
-
-    </style>
+  <title>Crud Operaction Into Database </title>
+  <style>
+  </style>
 </head>
 <body>
 
-<form id="student-form" method="post" action="/main" style="position:fixed;">
-FirstName: <input type="text" name="fn" value="<%= FirstName%>"><br>
-LastName: <input type="text" name="ln" value="<%= LastName%>"><br>
-Email:    <input type="text" name="email" value="<%= Email%>"><br>
-Password: <input type="text" name="pwd" value="<%= Password %>"><br>
-  <button onclick="">Add</button>
-  <button onclick="">Edit</button>
-  <button onclick="">Delete</button>
-</form>
+<h1>User list</h1>
+<ul>
+  <% results.forEach(function(result) { %>
+    <li><%= result.firstname %> - <%= result.lastname %> - <%= result.email %> - <%= result.password %>
+      <a href="/edit?email=<%= result.email %>"> Edit</a>
+      <a href="/delete?email=<%= result.email %>"> Delete</a>
+    </li>
+  <% }); %>
+</ul>
+
+<a href="/add">Add</a>
 </body>
 </html>
