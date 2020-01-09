@@ -9,15 +9,67 @@
 
 <h1>add user</h1>
 
-<form name="user" method="post" action="/add">
+<form name="user" method="post" action="/add" onsubmit="return checkEmptyInput();">
 
-First name:<input type="text" name="firstname">	<br>
-Last name:<input type="text" name="lastname">	<br>
-Email:<input type="text" name="email">	<br>
-Password:<input type="password" name="password">	<br>
-<button type="submit">Save</button>
+First name:<input type="text" name="firstname" value="<%= results.firstname %>" id="fn"><br>
+<% if(errors.firstname) { %><span style="color: red;">
+<%= errors.firstname %></span>
+<% } %>
+	<br>
+Last name:<input type="text" name="lastname" value="<%= results.lastname %>" id="ln"><br>
+<% if(errors.lastname) { %><span style="color: red;">
+<%= errors.lastname %></span>
+<% } %>	<br>
+Email:<input type="text" name="email" value="<%= results.email %>" id ="email"> <br>
+<% if(errors.email) { %><span style="color: red;">
+<%= errors.email %></span>
+<% } %>	<br>
+Password:<input type="password" name="password" value="<%= results.password %>" id="pwd"><br>
+<% if(errors.password) { %><span style="color: red;">
+<%= errors.password %></span>
+<% } %>	<br>
+<!-- <button type="submit">Save</button> -->
+<input type="submit" value="Submit">
 </form>
-
+<script type="text/javascript">
+	
+	<% if(errors.firstname) { %>
+alert("<%= errors.firstname %>");
+<% } %>
+	
+function checkEmptyInput()
+  {
+  var isEmpty = true;
+  var fname = document.getElementById("fn").value;
+  if(fname === ""){
+    alert("First Name Cannot Be Empty");
+    isEmpty = false;
+  }
+  var lname = document.getElementById("ln").value;
+  if(lname === ""){
+    alert("Last Name Cannot Be Empty");
+    isEmpty = false;
+  }
+  var email = document.getElementById("email").value;
+  if(email === ""){
+    alert("Email Cannot Be Empty");
+    isEmpty = false;
+  }
+  var password = document.getElementById("pwd").value;
+  if(password === ""){
+    alert("Password Cannot Be Empty");
+    isEmpty = false;
+  }
+  // var email = document.getElementById("email").value;
+  if(email !== "" && !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))){
+    alert("Please valid email");
+    isEmpty = false;
+  }
+  return isEmpty;
+}
+</script>
 
 </body>
+
+
 </html>

@@ -6,8 +6,11 @@ const route = require("./controllers/app_route");
 const path = require('path');
 const bodyParser = require('body-parser');
 const sha1 = require('sha1');
-const {check,validationResult} = require('express-validator');
-const { Validator } = require('node-input-validator');
+//const {check,validationResult} = require('express-validator');
+//const { Validator } = require('node-input-validator');
+var Regex = require("regex");
+const emailRegex = require('email-regex');
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,6 +32,8 @@ app.get('/',(req, res) => {
 
 app.get('/add',(req, res) => {
   res.render('add',{
+    errors: {},
+    results: {}
   });
 });
 app.get('/edit',(req, res) => {
@@ -44,12 +49,34 @@ app.get('/edit',(req, res) => {
 });
 //route for insert data
 app.post('/add',(req, res) => {
-  var filter = `^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/`;
+  // var filter = `^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/`;
+ // var regex = new Regex(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/);
+  //console.log(emailRegex().test(req.body.email));
+  var errors = {};
   let data = {firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, password: sha1(req.body.password)};
+  // if(req.body.firstname === "") {
+  //   errors.firstname = "Please enter First Name";
+  // }
+  // if(req.body.lastname === "") {
+  //   errors.lastname = "Please enter Last Name";
+  // }
+  // if(req.body.email === "") {
+  //   errors.email = "Please enter Email";
+  // }
+  // if(req.body.body.password === "") {
+  //   errors.password = "Please enter Password";
+  // }
+  errors = checkempty(req.body);
   if(req.body.firstname === ""|| req.body.lastname === "" || req.body.email === "" || req.body.password === ""){
-      console.log("Field Cannot Be Empty");
-     }else if (req.body.email === filter){
-       console.log("Please Enter Proper Email")
+      res.render('add',{
+        results: req.body,
+        errors : errors
+      });
+     }else if (!emailRegex().test(req.body.email)){
+       res.render('add',{
+        results: req.body,
+        errors : {'email': 'please enter valid email'}
+      });
   }else {
   //return isEmpty;
   let sql = "INSERT INTO details SET ?";
@@ -59,6 +86,25 @@ app.post('/add',(req, res) => {
   });
   }
 });
+
+
+function checkempty(data) {
+  var errors = {};
+  if(data.firstname === "") {
+    errors.firstname = "Please enter First Name";
+  }
+  if(data.lastname === "") {
+    errors.lastname = "Please enter Last Name";
+  }
+  if(data.email === "") {
+    errors.email = "Please enter Email";
+  }
+  if(data.password === "") {
+    errors.password = "Please enter Password";
+  }
+
+  return errors;
+}
 //define router
 /*app.post('/app', [
   check('email', 'email is required').isEmail(),
