@@ -6,7 +6,13 @@
 
 
 <table border="1">
-    <th>FirstName</th> <th>Lastname</th> <th>Email</th> <th>Password</th> <th> Edit </th> <th> Delete </th>
+    <th>FirstName</th> 
+    <th>Lastname</th>
+     <th>Email</th>
+      <th>Password</th>
+      <th>Mobile</th>      
+       <th> Edit </th>
+        <th> Delete </th>
     <tr><% results.forEach(function(result) { %></tr>
           <td><%= result.firstname %></td> - <td><%= result.lastname %></td> - <td><%= result.email %></td> - <td><%= result.password %></td>
           <td><a href="/edit?email=<%= result.email %>"> Edit</a></td>

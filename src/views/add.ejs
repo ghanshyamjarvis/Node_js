@@ -25,11 +25,19 @@ Last name:<input type="text" name="lastname" value="<%= results.lastname %>" id=
 Email:<input type="text" name="email" value="<%= results.email %>" id ="email"> <br>
 <% if(errors.email) { %><span style="color: red;">
 <%= errors.email %></span>
+<% } %>
+
+<% if(errors.emailnotvalid) { %><span style="color: red;">
+<%= errors.emailnotvalid %></span>
 <% } %>	<br>
 
 Password:<input type="password" name="password" value="<%= results.password %>" id="pwd"><br>
 <% if(errors.password) { %><span style="color: red;">
 <%= errors.password %></span>
+<% } %>	<br>
+Mobile:<input type="text" name="mobile" value="<%= results.mobile %>" id="mb"><br>
+<% if(errors.mobile) { %><span style="color: red;">
+<%= errors.mobile %></span>
 <% } %>	<br>
 
 <!-- <button type="submit">Save</button> -->

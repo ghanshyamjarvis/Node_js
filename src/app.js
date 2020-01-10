@@ -9,6 +9,7 @@ const sha1 = require('sha1');
 //const {check,validationResult} = require('express-validator');
 //const { Validator } = require('node-input-validator');
 var Regex = require("regex");
+const XRegExp = require('xregexp');
 const emailRegex = require('email-regex');
 
 
@@ -37,61 +38,84 @@ app.get('/add',(req, res) => {
   });
 });
 app.get('/edit',(req, res) => {
+    var errors={};
   // console.log(req.query);
   let sql = "SELECT * FROM details where email = ?";
   let query = connection.query(sql, req.query.email, (err, results) => {
     console.log(results);
     if(err) throw err;
     res.render('edit',{
-      results: results
+      errors: errors,
+      results: results[0]
     });
   });
 });
 //route for insert data
 app.post('/add',(req, res) => {
-  // var filter = `^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/`;
- // var regex = new Regex(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/);
-  //console.log(emailRegex().test(req.body.email));
   var errors = {};
   var check ={};
-  let data = {firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, password: sha1(req.body.password)};
-  // if(req.body.firstname === "") {
-  //   errors.firstname = "Please enter First Name";
-  // }
-  // if(req.body.lastname === "") {
-  //   errors.lastname = "Please enter Last Name";
-  // }
-  // if(req.body.email === "") {
-  //   errors.email = "Please enter Email";
-  // }
-  // if(req.body.body.password === "") {
-  //   errors.password = "Please enter Password";
-  // }
+  var regex = new Regex(/^[A-Z]{1,10}$/);
+
+  let data = {firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, password: sha1(req.body.password),mobile: req.body.mobile};
+ /* if(req.body.firstname === "") {
+    errors.firstname = "Please enter First Name";
+  }
+  if(req.body.lastname === "") {
+    errors.lastname = "Please enter Last Name";
+  }
+  if(req.body.email === "") {
+    errors.email = "Please enter Email";
+  }
+  if(req.body.body.password === "") {
+    errors.password = "Please enter Password";
+  }*/
+
+  //console.log(XRegExp('/^[A-Z]{1,10}$/').test(req.body.firstname));
+
   errors = checkempty(req.body);
-  //check = findemail(req.body.email);
-  if(req.body.firstname === ""|| req.body.lastname === "" || req.body.email === "" || req.body.password === ""){
+  // XRegExp('^\\p{Hiragana}+$').test('ひらがな');
+
+  if(req.body.firstname === ""|| req.body.lastname === "" || req.body.email === "" || req.body.password === "" || req.body.mobile === ""){
       res.render('add',{
         results: req.body,
         errors : errors
       });
-     }else if (!emailRegex().test(req.body.email)){
+     }else if (!XRegExp('^[A-Z]{1,10}$').test(req.body.firstname)){
+       res.render('add',{
+        results: req.body,
+        errors : {'firstname': 'Enter a to z limint 10 charater'}
+      });
+     }else if (!XRegExp('^[0-9]{1,10}$').test(req.body.mobile)){
+       res.render('add',{
+        results: req.body,
+        errors : {'mobile': 'please enter 0to9 numeric'}
+      });
+     }
+
+     else if (!emailRegex().test(req.body.email)){
        res.render('add',{
         results: req.body,
         errors : {'email': 'please enter valid email'}
       });
-  }/*else if (req.body.email===""){
-    console.log("req.body.email",req.body.email)
-    res.render('add',{
-      results:req.body,
-      errors: errors
-    })
-  }*/else {
-  //return isEmpty;
-  let sql = "INSERT INTO details SET ?";
-  let query = connection.query(sql, data,(err, results) => {
-    if(err) throw err;
-    res.redirect('/');
-  });
+  }else {
+  const sql = "select * from details where email = ?"
+  connection.query(sql,req.body.email,(err, results)=>{
+    if (err) throw err 
+    if(Object.keys(results).length > 0 ){
+      check.emailnotvalid = "This email is already exits";
+      res.render('add',{
+        results: req.body,
+        errors : check
+      });
+    } else {
+      let sql = "INSERT INTO details SET ?";
+      let query = connection.query(sql, data,(err, results) => {
+        if(err) throw err;
+        res.redirect('/');
+      });
+    }
+  })
+  
   }
 });
 
@@ -109,46 +133,36 @@ function checkempty(data) {
   if(data.password === "") {
     errors.password = "Please enter Password";
   }
+  if(data.mobile === "") {
+    errors.mobile = "Please enter mobile";
+  }
 
   return errors;
 }
 
-
-/*
-function findemail(email){
-  var check ={};
-  //console.log("email",email)
-  let sql = "select * from details where email = ?";
-  connection.query(sql,[email],(err, results)=>{
-      if (email.results == results){
-        check.email = "Duplicate Record"
-      }
-        return
-  })
-}
-*/
-
-
-
-
-
-
-
-
 //route for update data
   app.post('/edit', (req, res) => {
+    
+     var errors = {};
+     errors = checkempty(req.body);
     let sql = "UPDATE details SET firstname='" + req.body.firstname + "', lastname='" + req.body.lastname + "', password='" + req.body.password + "' WHERE email='" + req.body.email + "'";
     //console.log("updated recoud",sql);
-    /*if (req.body.firstname === "" || req.body.lastname === ""){
+    if (req.body.firstname === ""|| req.body.lastname === ""|| req.body.email === "" || req.body.password === ""){    
       res.render('edit',{
         results: req.body,
-        errors:{'firstname':'Cannot Place Blank Value','lastname':'Cannot Place Blank Value'}
+        errors: errors
       })
-    }*/
+    }else if (!emailRegex().test(req.body.email)){
+       res.render('edit',{
+        results: req.body,
+        errors : {'email': 'please enter valid email'}
+      });
+    }else{
     let query = connection.query(sql, (err, results) => {
       if (err) throw err;
       res.redirect('/');
     });
+    }
   });
 //route for delete data
   app.get('/delete', (req, res) => {
@@ -158,33 +172,6 @@ function findemail(email){
       res.redirect('/');
     });
   });
-
- /* function checkEmptyInput()
-  {
-  var isEmpty = false,
-    fname = document.getElementById("firstname").value,
-    lname = document.getElementById("lastname").value,
-    email = document.getElementById("email").value,
-    password = document.getElementById("password").value;
-
-  if(firstname === ""|| lastname === "" || email === "" || password === ""){
-    alert("Connot Be Empty");
-    isEmpty = true;
-  }
-  return isEmpty;
-}
-
-function ValidateEmail(mail)
-{
-  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(myForm.emailAddr.value))
-  {
-    return (true)
-  }
-  alert("You have entered an invalid email address!")
-  return (false)
-}
-*/
-
 
 
   module.exports = app;

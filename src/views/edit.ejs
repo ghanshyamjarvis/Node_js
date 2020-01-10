@@ -10,10 +10,25 @@
 
 <form name="user" method="post" action="/edit">
 
-  First name:<input type="text" name="firstname" value="<%= results[0].firstname %>">	<br>
-  Last name:<input type="text" name="lastname" value="<%= results[0].lastname %>">	<br>
-  Email:<input type="text" name="email" value="<%= results[0].email %>">	<br>
-  Password:<input type="password" name="password" value="<%= results[0].password %>">	<br>
+  First name:<input type="text" name="firstname" value="<%= results.firstname %>">	<br>
+  <% if(errors.firstname) { %><span style="color: red;">
+<%= errors.firstname %></span>
+<% } %>
+	<br>
+
+  Last name:<input type="text" name="lastname" value="<%= results.lastname %>">	<br>
+  <% if(errors.lastname) { %><span style="color: red;">
+<%= errors.lastname %></span>
+<% } %>
+	<br>
+  Email:<input type="text" name="email" value="<%= results.email %>">	<br>
+   <% if(errors.email) { %><span style="color: red;">
+<%= errors.email %></span>
+<% } %><br>
+  Password:<input type="password" name="password" value="<%= results.password %>">	<br>
+   <% if(errors.password) { %><span style="color: red;">
+<%= errors.password %></span>
+<% } %><br>
   <button type="submit">Save</button>
 </form>
 
