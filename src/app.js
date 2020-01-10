@@ -53,6 +53,7 @@ app.post('/add',(req, res) => {
  // var regex = new Regex(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/);
   //console.log(emailRegex().test(req.body.email));
   var errors = {};
+  var check ={};
   let data = {firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, password: sha1(req.body.password)};
   // if(req.body.firstname === "") {
   //   errors.firstname = "Please enter First Name";
@@ -67,6 +68,7 @@ app.post('/add',(req, res) => {
   //   errors.password = "Please enter Password";
   // }
   errors = checkempty(req.body);
+  //check = findemail(req.body.email);
   if(req.body.firstname === ""|| req.body.lastname === "" || req.body.email === "" || req.body.password === ""){
       res.render('add',{
         results: req.body,
@@ -77,7 +79,13 @@ app.post('/add',(req, res) => {
         results: req.body,
         errors : {'email': 'please enter valid email'}
       });
-  }else {
+  }/*else if (req.body.email===""){
+    console.log("req.body.email",req.body.email)
+    res.render('add',{
+      results:req.body,
+      errors: errors
+    })
+  }*/else {
   //return isEmpty;
   let sql = "INSERT INTO details SET ?";
   let query = connection.query(sql, data,(err, results) => {
@@ -86,7 +94,6 @@ app.post('/add',(req, res) => {
   });
   }
 });
-
 
 function checkempty(data) {
   var errors = {};
@@ -105,29 +112,39 @@ function checkempty(data) {
 
   return errors;
 }
-//define router
-/*app.post('/app', [
-  check('email', 'email is required').isEmail(),
-  check('firstname', 'name is required').not().isEmpty(),
-  check('password', 'password is required').not().isEmpty(),
-], function(req, res, next) {
-  //check validate data
-  const result = validationResult(req);
-  var errors = result.errors;
-  for (var key in errors) {
-    console.log(errors[key].value);
-  }
-  if (!result.isEmpty()) {
-    //response validate data to register.ejs
-    res.render('app', {
-      errors: errors
-    })
-  }
+
+
+/*
+function findemail(email){
+  var check ={};
+  //console.log("email",email)
+  let sql = "select * from details where email = ?";
+  connection.query(sql,[email],(err, results)=>{
+      if (email.results == results){
+        check.email = "Duplicate Record"
+      }
+        return
+  })
+}
 */
+
+
+
+
+
+
+
 
 //route for update data
   app.post('/edit', (req, res) => {
     let sql = "UPDATE details SET firstname='" + req.body.firstname + "', lastname='" + req.body.lastname + "', password='" + req.body.password + "' WHERE email='" + req.body.email + "'";
+    //console.log("updated recoud",sql);
+    /*if (req.body.firstname === "" || req.body.lastname === ""){
+      res.render('edit',{
+        results: req.body,
+        errors:{'firstname':'Cannot Place Blank Value','lastname':'Cannot Place Blank Value'}
+      })
+    }*/
     let query = connection.query(sql, (err, results) => {
       if (err) throw err;
       res.redirect('/');
@@ -167,11 +184,6 @@ function ValidateEmail(mail)
   return (false)
 }
 */
-
-
-
-
-
 
 
 

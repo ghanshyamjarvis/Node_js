@@ -16,21 +16,26 @@ First name:<input type="text" name="firstname" value="<%= results.firstname %>" 
 <%= errors.firstname %></span>
 <% } %>
 	<br>
+
 Last name:<input type="text" name="lastname" value="<%= results.lastname %>" id="ln"><br>
 <% if(errors.lastname) { %><span style="color: red;">
 <%= errors.lastname %></span>
 <% } %>	<br>
+
 Email:<input type="text" name="email" value="<%= results.email %>" id ="email"> <br>
 <% if(errors.email) { %><span style="color: red;">
 <%= errors.email %></span>
 <% } %>	<br>
+
 Password:<input type="password" name="password" value="<%= results.password %>" id="pwd"><br>
 <% if(errors.password) { %><span style="color: red;">
 <%= errors.password %></span>
 <% } %>	<br>
+
 <!-- <button type="submit">Save</button> -->
 <input type="submit" value="Submit">
 </form>
+<!--
 <script type="text/javascript">
 	
 	<% if(errors.firstname) { %>
@@ -68,6 +73,7 @@ function checkEmptyInput()
   return isEmpty;
 }
 </script>
+-->
 
 </body>
 
