@@ -14,12 +14,13 @@
        <th> Edit </th>
         <th> Delete </th>
     <tr><% results.forEach(function(result) { %></tr>
-          <td><%= result.firstname %></td> - <td><%= result.lastname %></td> - <td><%= result.email %></td> - <td><%= result.password %></td>
+          <td><%= result.firstname %></td> - <td><%= result.lastname %></td> - <td><%= result.email %></td> - <td><%= result.password %></td> <td><%= result.mobile %></td>
           <td><a href="/edit?email=<%= result.email %>"> Edit</a></td>
           <td><a href="/delete?email=<%= result.email %>"> Delete</a></td>
             <% }); %>
   <a href="/add">Add</a>
 </table>
+
 <% if (locals.errors) { %>
   <ul>
     <% Object.values(errors).forEach(function(error){ %>
@@ -27,5 +28,6 @@
     <% }); %>
   </ul>
 <% } %>
+
 </body>
 </html>

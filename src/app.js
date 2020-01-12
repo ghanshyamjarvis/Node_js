@@ -54,7 +54,7 @@ app.get('/edit',(req, res) => {
 app.post('/add',(req, res) => {
   var errors = {};
   var check ={};
-  var regex = new Regex(/^[A-Z]{1,10}$/);
+//  var regex = new Regex(/^[A-Z]{1,10}$/);
 
   let data = {firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, password: sha1(req.body.password),mobile: req.body.mobile};
  /* if(req.body.firstname === "") {
@@ -80,34 +80,70 @@ app.post('/add',(req, res) => {
         results: req.body,
         errors : errors
       });
-     }else if (!XRegExp('^[A-Z]{1,10}$').test(req.body.firstname)){
+     }else if (!XRegExp('^[a-zA-Z]{1,10}$').test(req.body.firstname)){
        res.render('add',{
         results: req.body,
         errors : {'firstname': 'Enter a to z limint 10 charater'}
       });
-     }else if (!XRegExp('^[0-9]{1,10}$').test(req.body.mobile)){
+     }else if (!XRegExp('^[a-zA-Z]{1,10}$').test(req.body.lastname)){
        res.render('add',{
         results: req.body,
-        errors : {'mobile': 'please enter 0to9 numeric'}
+        errors : {'firstname': 'Enter a to z limint 10 charater'}
+      });
+     }else if (!XRegExp('^[0-9]{10,10}$').test(req.body.mobile)){
+       res.render('add',{
+        results: req.body,
+        errors : {'mobile': 'Enter Only  numeric limit 10'}
+      });
+     }else if (!XRegExp('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$').test(req.body.email)){
+       res.render('add',{
+        results: req.body,
+        errors : {'email': 'Fill Proper Email format'}
       });
      }
-
-     else if (!emailRegex().test(req.body.email)){
+     /*else if (!emailRegex().test(req.body.email)){
        res.render('add',{
         results: req.body,
         errors : {'email': 'please enter valid email'}
       });
-  }else {
-  const sql = "select * from details where email = ?"
-  connection.query(sql,req.body.email,(err, results)=>{
-    if (err) throw err 
-    if(Object.keys(results).length > 0 ){
+     }*/
+     else if (!XRegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})").test(req.body.password)){
+       res.render('add',{
+        results: req.body,
+        errors : {'password': 'password string Contain minmum 8 Charater,one lowercase charater, one uppercase charater, one special charater'}
+      });
+     }else {
+      const sql = "select * from details where email = ?"
+      connection.query(sql,req.body.email,(err, results)=>{
+      if (err) throw err 
+      if(Object.keys(results).length > 0 ){
       check.emailnotvalid = "This email is already exits";
       res.render('add',{
         results: req.body,
         errors : check
       });
-    } else {
+    }/*else {
+      const sql = "select * from details where email = ? mobile = ?"
+      connection.query(sql,[req.body.email,req.body.mobile],(err, results)=>{
+      if (err) throw err 
+      if(Object.keys(results).length > 0 ){
+      check.emailphonenotvalid = "This email or number is already exits";
+      res.render('add',{
+        results: [req.body.email,req.body.mobile],
+        errors : check
+      });
+    }*/
+    /*else {
+      const sql = "select * from details where mobile = ?"
+      connection.query(sql,req.body.mobile,(err, results)=>{
+      if (err) throw err 
+      if(Object.keys(results).length > 0 ){
+      checknumber.numbernotvalid = "This mobile is already exits";
+      res.render('add',{
+        results: req.body,
+        errors : checknumber
+      });
+    }*/else {
       let sql = "INSERT INTO details SET ?";
       let query = connection.query(sql, data,(err, results) => {
         if(err) throw err;
@@ -145,14 +181,14 @@ function checkempty(data) {
     
      var errors = {};
      errors = checkempty(req.body);
-    let sql = "UPDATE details SET firstname='" + req.body.firstname + "', lastname='" + req.body.lastname + "', password='" + req.body.password + "' WHERE email='" + req.body.email + "'";
+    let sql = "UPDATE details SET firstname='" + req.body.firstname + "', lastname='" + req.body.lastname + "', password='" + req.body.password + "',mobile='" + req.body.mobile + "' WHERE email='" + req.body.email + "'";
     //console.log("updated recoud",sql);
-    if (req.body.firstname === ""|| req.body.lastname === ""|| req.body.email === "" || req.body.password === ""){    
+    if (req.body.firstname === ""|| req.body.lastname === ""|| req.body.email === "" || req.body.password === "" || req.body.mobile === ""){    
       res.render('edit',{
         results: req.body,
         errors: errors
       })
-    }else if (!emailRegex().test(req.body.email)){
+    }else if (!XRegExp('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$').test(req.body.email)){
        res.render('edit',{
         results: req.body,
         errors : {'email': 'please enter valid email'}

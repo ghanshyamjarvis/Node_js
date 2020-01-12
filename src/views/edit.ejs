@@ -29,6 +29,12 @@
    <% if(errors.password) { %><span style="color: red;">
 <%= errors.password %></span>
 <% } %><br>
+mobile:<input type="text" name="mobile" value="<%= results.mobile %>">	<br>
+   <% if(errors.mobile) { %><span style="color: red;">
+<%= errors.mobile %></span>
+<% } %><br>
+
+
   <button type="submit">Save</button>
 </form>
 
