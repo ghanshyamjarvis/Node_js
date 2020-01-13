@@ -107,26 +107,24 @@ app.post('/add',(req, res) => {
         //console.log("results",results);
       if (err) throw err
       if(Object.keys(results).length > 0 ){
-        //console.log("results",results);
       check.emailnotvalid = "This email is already exits";
       res.render('add',{
         results: req.body,
         errors : check
       });
     }
-      /*else {
-      //const mm = [req.body.email, req.body.mobile];
-      const sql = "select * from details where (email = ? or mobile = ?)"
+     /* else {
+    const sql = "select * from details where (email = ? or mobile = ?)"
     const {email,mobile} = req.body;
       connection.query(sql,[email, mobile], (err, results)=>{
-      console.log("result",results)
+      //console.log("result",results)
         if (err) throw err
         if(Object.keys(results).length > 0 ){
-        check.emailphonenotvalid = "This email or number is already exits";
+        check.emailorphonenotvalid = "This email or number is already exits";
         res.render('add',{
-          results:results,
+          results:req.body,
           errors : check
-        });
+        },);
       }*/
       /*else {
       const sql = "select * from details where mobile = ?"
