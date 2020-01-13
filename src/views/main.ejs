@@ -14,12 +14,13 @@
        <th> Edit </th>
         <th> Delete </th>
     <tr><% results.forEach(function(result) { %></tr>
-          <td><%= result.firstname %></td> - <td><%= result.lastname %></td> - <td><%= result.email %></td> - <td><%= result.password %></td> - <td><%= result.mobile %></td>
+          <td><%= result.firstname %></td> - <td><%= result.lastname %></td> - <td><%= result.email %></td> - <td><%= result.password %></td> <td><%= result.mobile %></td>
           <td><a href="/edit?email=<%= result.email %>"> Edit</a></td>
           <td><a href="/delete?email=<%= result.email %>"> Delete</a></td>
             <% }); %>
   <a href="/add">Add</a>
 </table>
+
 <% if (locals.errors) { %>
   <ul>
     <% Object.values(errors).forEach(function(error){ %>
@@ -27,23 +28,6 @@
     <% }); %>
   </ul>
 <% } %>
+
 </body>
 </html>
-
-<!--
-
-Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:
-^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$
-
-Minimum eight and maximum 10 characters, at least one uppercase letter,
-one lowercase letter, one number and one special character:
-"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$"
-
-This regex will enforce these rules:
-
-At least one upper case English letter, (?=.*?[A-Z])
-At least one lower case English letter, (?=.*?[a-z])
-At least one digit, (?=.*?[0-9])
-At least one special character, (?=.*?[#?!@$%^&*-])
-Minimum eight in length .{8,} (with the anchors)
--->
