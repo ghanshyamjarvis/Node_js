@@ -11,7 +11,7 @@
 
 <form name="user" method="post" action="/add" onsubmit="return checkEmptyInput();">
 
-First name:<input type="text" name="firstname" value="<%= results.firstname %>" id="fn"><br>
+  First name:<input type="text" name="firstname" value="<%= results.firstname %>" id="fn"><br>
 <% if(errors.firstname) { %><span style="color: red;">
 <%= errors.firstname %></span>
 <% } %>
@@ -41,7 +41,8 @@ Mobile:<input type="text" name="mobile" value="<%= results.mobile %>" id="mb"><b
 <%= errors.mobile %></span>
 <% } %>	<br>
 
-<!-- <button type="submit">Save</button> -->
+   Image: <input type="file" accept="image/*" name="image" ><br>
+
 <input type="submit" value="Submit">
 </form>
 <!--

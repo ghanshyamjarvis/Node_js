@@ -38,8 +38,8 @@ app.get('/add',(req, res) => {
 app.get('/edit',(req, res) => {
     var errors={};
   // console.log(req.query);
-  let sql = "SELECT * FROM details where email = ?";
-  let query = connection.query(sql, req.query.email, (err, results) => {
+  let sql = "SELECT * FROM details where student_id = ?";
+  let query = connection.query(sql, req.query.student_id, (err, results) => {
     console.log(results);
     if(err) throw err;
     res.render('edit',{
@@ -48,12 +48,21 @@ app.get('/edit',(req, res) => {
     });
   });
 });
+/*
+app.post('/add', upload.single('image'), (req, res) => {
+  if(req.file) {
+    res.json(req.file);
+  }
+  else throw 'error';
+});
+*/
+
 //route for insert data
 app.post('/add',(req, res) => {
   var errors = {};
   var check ={};
 //  var regex = new Regex(/^[A-Z]{1,10}$/);
-  let data = {firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, password: sha1(req.body.password),mobile: req.body.mobile};
+  let data = {student_id: req.body.student_id, firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, password: sha1(req.body.password),mobile: req.body.mobile,image: req.body.image };
  /* if(req.body.firstname === "") {
     errors.firstname = "Please enter First Name";
   }
@@ -66,16 +75,13 @@ app.post('/add',(req, res) => {
   if(req.body.body.password === "") {
     errors.password = "Please enter Password";
   }*/
-  //console.log(XRegExp('/^[A-Z]{1,10}$/').test(req.body.firstname));
   errors = checkempty(req.body);
-  // XRegExp('^\\p{Hiragana}+$').test('ひらがな');
-
-  if(req.body.firstname === ""|| req.body.lastname === "" || req.body.email === "" || req.body.password === "" || req.body.mobile === ""){
+  if(req.body.firstname === ""|| req.body.lastname === "" || req.body.email === "" || req.body.password === "" || req.body.mobile === ""|| req.body.image === ""){
       res.render('add',{
         results: req.body,
         errors : errors
       });
-     }else if (!XRegExp('^[a-zA-Z]{1,10}$').test(req.body.firstname)){
+      }else if (!XRegExp('^[a-zA-Z]{1,10}$').test(req.body.firstname)){
        res.render('add',{
         results: req.body,
         errors : {'firstname': 'Enter a to z limint 10 charater'}
@@ -95,18 +101,17 @@ app.post('/add',(req, res) => {
         results: req.body,
         errors : {'email': 'Fill Proper Email format'}
       });
-     }
-  else if (!XRegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})").test(req.body.password)){
-    res.render('add',{
-      results: req.body,
-      errors : {'password': 'password string Contain minmum 8 Charater,one lowercase charater, one uppercase charater, one special charater'}
+     }else if (!XRegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})").test(req.body.password)){
+       res.render('add',{
+        results: req.body,
+        errors : {'password': 'password string Contain minmum 8 Charater,one lowercase charater, one uppercase charater, one special charater'}
     });
   }else {
       const sql = "select * from details where email = ?"
       connection.query(sql, req.body.email,(err, results)=>{
-        //console.log("results",results);
       if (err) throw err
       if(Object.keys(results).length > 0 ){
+        //console.log("results",results);
       check.emailnotvalid = "This email is already exits";
       res.render('add',{
         results: req.body,
@@ -179,14 +184,20 @@ function checkempty(data) {
     
      var errors = {};
      errors = checkempty(req.body);
-    let sql = "UPDATE details SET firstname='" + req.body.firstname + "', lastname='" + req.body.lastname + "', password='" + req.body.password + "',mobile='" + req.body.mobile + "' WHERE email='" + req.body.email + "'";
-    //console.log("updated recoud",sql);
-    if (req.body.firstname === ""|| req.body.lastname === ""|| req.body.email === "" || req.body.password === "" || req.body.mobile === ""){
+    let sql = "UPDATE details SET firstname='" + req.body.firstname + "', lastname='" + req.body.lastname + "',email='" + req.body.email + "', password='" + sha1(req.body.password) + "', mobile='" + req.body.mobile +"', image='" + req.body.image + "' WHERE student_id='" + req.body.student_id + "'";
+    if (req.body.student_id === "" || req.body.firstname === ""|| req.body.lastname === ""|| req.body.email === "" || req.body.password === "" || req.body.mobile === "" || req.body.image){
       res.render('edit',{
         results: req.body,
         errors: errors
       })
-    }else if (!XRegExp('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$').test(req.body.email)){
+    }
+    else if (req.body.image === ""){
+      res.render('edit',{
+        results: req.body,
+        errors : {'image': 'edit image'}
+      });
+    }
+    else if (!XRegExp('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$').test(req.body.email)){
        res.render('edit',{
         results: req.body,
         errors : {'email': 'please enter valid email'}
