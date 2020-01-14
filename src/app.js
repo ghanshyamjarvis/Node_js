@@ -10,6 +10,7 @@ const sha1 = require('sha1');
 //const { Validator } = require('node-input-validator');
 //var Regex = require("regex");
 const XRegExp = require('xregexp');
+app.use(express.static(path.join(__dirname, 'images')));
 //const emailRegex = require('email-regex');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
