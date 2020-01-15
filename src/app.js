@@ -6,19 +6,27 @@ const route = require("./controllers/app_route");
 const path = require('path');
 const bodyParser = require('body-parser');
 const sha1 = require('sha1');
-//const {check,validationResult} = require('express-validator');
-//const { Validator } = require('node-input-validator');
-//var Regex = require("regex");
 const XRegExp = require('xregexp');
+let multer = require('multer');
+const DIR = './src/images';
+
+
 app.use(express.static(path.join(__dirname, 'images')));
-//const emailRegex = require('email-regex');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-//set views file
 app.set('views', path.join(__dirname,'views'));
-//set view engine
 app.set('view engine', 'ejs');
-// get all data
+
+
+let storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, DIR);
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+let upload = multer({storage: storage});
 
 app.get('/',(req, res) => {
   let sql = "SELECT * FROM details";
@@ -29,7 +37,6 @@ app.get('/',(req, res) => {
     });
   });
 });
-
 app.get('/add',(req, res) => {
   res.render('add',{
     errors: {},
@@ -49,14 +56,12 @@ app.get('/edit',(req, res) => {
     });
   });
 });
-/*
 app.post('/add', upload.single('image'), (req, res) => {
   if(req.file) {
     res.json(req.file);
   }
   else throw 'error';
 });
-*/
 
 //route for insert data
 app.post('/add',(req, res) => {

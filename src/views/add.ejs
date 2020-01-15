@@ -9,7 +9,7 @@
 
 <h1>add user</h1>
 
-<form name="user" method="post" action="/add" onsubmit="return checkEmptyInput();">
+<form name="user" method="post" action="/add"  enctype="multipart/form-data" onsubmit="return checkEmptyInput();">
 
   First name:<input type="text" name="firstname" value="<%= results.firstname %>" id="fn"><br>
 <% if(errors.firstname) { %><span style="color: red;">
