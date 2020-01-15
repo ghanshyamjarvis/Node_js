@@ -1,0 +1,95 @@
+CREATE TABLE `details` (
+  `student_id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(45) DEFAULT NULL,
+  `lastname` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `mobile` varchar(45) DEFAULT NULL,
+  `image` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`student_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+SELECT * FROM studentForm.details;
+
+INSERT INTO `studentForm`.`details`
+(`student_id`,
+`firstname`,
+`lastname`,
+`email`,
+`password`,
+`mobile`,
+`image`)
+VALUES
+(<{student_id: }>,
+<{firstname: }>,
+<{lastname: }>,
+<{email: }>,
+<{password: }>,
+<{mobile: }>,
+<{image: }>);
+SELECT * FROM studentForm.details;
+
+UPDATE `studentForm`.`details`
+SET
+`student_id` = <{student_id: }>,
+`firstname` = <{firstname: }>,
+`lastname` = <{lastname: }>,
+`email` = <{email: }>,
+`password` = <{password: }>,
+`mobile` = <{mobile: }>,
+`image` = <{image: }>
+WHERE `student_id` = <{expr}>;
+
+
+ALTER TABLE `studentForm`.`details`
+CHANGE COLUMN `image` `image` BLOB NULL DEFAULT NULL ;
+
+
+
+//https://medium.com/@nitinpatel_20236/image-upload-via-nodejs-server-3fe7d3faa642
+//https://www.youtube.com/watch?v=1ZlwkITToS4
+//https://www.js-tutorials.com/nodejs-tutorial/node-js-file-upload-example-using-multer-and-mysql/
+//https://medium.com/@nitinpatel_20236/image-upload-via-nodejs-server-3fe7d3faa642
+
+
+
+/*app.post('/add', upload.single('image'), (req, res) => {
+  /!* {var filr = req.file.filename;
+  var image = req.body.image;
+  console.log(image);
+  res.send(filr);
+  })*!/
+  {
+    var imagefile = req.file.firstname;
+    var image = req.body.image;
+    console.log("image", image);
+    res.sent(imagefile)
+    res.render('add', {
+      results: imagefile,
+      errors: {'image': 'Image Not Uploaded'}
+    })
+  }
+});*/
+/*
+
+app.post('/add', upload.single('image'), (req, res) => {
+  if(req.file) {
+    res.json(req.file);
+  }
+  else throw 'error';
+});
+*/
+//let multer = require('multer');
+//const DIR = './src/images';
+/*
+
+let storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, DIR);
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+let upload = multer({storage: storage});
+*/
+
