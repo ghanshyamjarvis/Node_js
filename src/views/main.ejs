@@ -6,36 +6,41 @@
 
 
 <table border="1">
+  <tr>
     <th>Student_Id</th>
     <th>FirstName</th> 
     <th>Lastname</th>
-     <th>Email</th>
-      <th>Password</th>
-      <th>Mobile</th>
-      <th>Image</th>
-       <th> Edit </th>
-        <th> Delete </th>
-    <tr><% results.forEach(function(result) { %></tr>
-          <td><%= result.student_id %></td>
-          <td><%= result.firstname %></td>
-          <td><%= result.lastname %></td>
-          <td><%= result.email %></td>
-          <td><%= result.password %></td>
-          <td><%= result.mobile %></td>
-          <td><%= result.image%></td>
-          <td>
-              <% if(result.image) { %>
-                  <img src="http://localhost:5000/<%= result.image%>" height="50px" width="50px">
-              <% } %>
-          </td>
-          <td>
-            <a href="/edit?student_id=<%= result.student_id %>"> Edit</a>
-           </td>
-               <td><a href="/delete?student_id=<%= result.student_id %>"> Delete</a></td>
-            <% }); %>
-  <a href="/add">Add</a>
+    <th>Email</th>
+    <th>Password</th>
+    <th>Mobile</th>
+    <th>Image</th>
+    <th> Edit </th>
+    <th> Delete </th>
+  </tr>
+  <tr>
+    <% results.forEach(function(result) { %>
+      <td><%= result.student_id %></td>
+      <td><%= result.firstname %></td>
+      <td><%= result.lastname %></td>
+      <td><%= result.email %></td>
+      <td><%= result.password %></td>
+      <td><%= result.mobile %></td>
+      <td>
+        <% if(result.image) { %>
+          <img src="http://localhost:5000/<%= result.image%>" height="50px" width="50px">
+        <% } %>
+      </td>
+      <td>
+        <a href="/edit?student_id=<%= result.student_id %>"> Edit</a>
+      </td>
+      <td>
+        <a href="/delete?student_id=<%= result.student_id %>"> Delete</a>
+      </td>
+    <% }); %>
+  </tr>
+  
 </table>
-
+<a href="/add">Add</a>
 <% if (locals.errors) { %>
   <ul>
     <% Object.values(errors).forEach(function(error){ %>

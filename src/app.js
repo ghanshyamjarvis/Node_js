@@ -99,7 +99,7 @@ app.post('/add', upload.single('image'), (req, res) => {
       results: req.body,
       errors: {'password': 'password string Contain minmum 8 Charater,one lowercase charater, one uppercase charater, one special charater'}
     });
-  }/* else if(req.body.email) {
+  }/* else (req.body.email) {
     const sql = "select * from details where email = ?"
       connection.query(sql, req.body.email,(err, results)=>{
       if (err) throw err
@@ -118,105 +118,29 @@ app.post('/add', upload.single('image'), (req, res) => {
       errors: {'image': 'Please enter proper file'}
     });
   } else {
-    data.image = req.file.filename;
-    let sql = "INSERT INTO details SET ?";
-    connection.query(sql, data, (err, results) => {
-      if (err) throw err;
-      res.redirect('/');
-    });
-  }
-});
-/*
-app.post('/add',upload.single('image'), (req, res) => {
-  //console.log("req.file",req.file);
-  var errors = {};
-  var check ={};
-  let data = {firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, password: sha1(req.body.password),mobile: req.body.mobile};
-  errors = checkempty(req.body);
-  if(req.body.firstname === ""|| req.body.lastname === "" || req.body.email === "" || req.body.password === "" || req.body.mobile === ""|| req.body.image === ""){
-      res.render('add',{
-        results: req.body,
-        errors : errors
-      });
-      }else if (!XRegExp('^[a-zA-Z]{1,10}$').test(req.body.firstname)){
-       res.render('add',{
-        results: req.body,
-        errors : {'firstname': 'Enter a to z limint 10 charater'}
-      });
-     }else if (!XRegExp('^[a-zA-Z]{1,10}$').test(req.body.lastname)){
-       res.render('add',{
-        results: req.body,
-        errors : {'firstname': 'Enter a to z limint 10 charater'}
-      });
-     }else if (!XRegExp('^[0-9]{10,10}$').test(req.body.mobile)){
-       res.render('add',{
-        results: req.body,
-        errors : {'mobile': 'Enter Only  numeric limit 10'}
-      });
-     }else if (!XRegExp('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$').test(req.body.email)){
-       res.render('add',{
-        results: req.body,
-        errors : {'email': 'Fill Proper Email format'}
-      });
-     }else if (!XRegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})").test(req.body.password)){
-       res.render('add',{
-        results: req.body,
-        errors : {'password': 'password string Contain minmum 8 Charater,one lowercase charater, one uppercase charater, one special charater'}
-    });
-  }/!*else if (!req.file){
-    //console.log("req.file", (!req.file));
-    res.render('add',{
-      results: req.body,
-      errors : {'image': 'upload Proper Image'}
-    });
-  }*!/else {
-      const sql = "select * from details where email = ?"
-      connection.query(sql, req.body.email,(err, results)=>{
+    const sql = "select * from details where email = ?"
+    connection.query(sql, req.body.email,(err, results)=>{
       if (err) throw err
       if(Object.keys(results).length > 0 ){
-      check.emailnotvalid = "This email is already exits";
-      res.render('add',{
-        results: req.body,
-        errors : check
-      });
-    }
-     /!* else {
-    const sql = "select * from details where (email = ? or mobile = ?)"
-    const {email,mobile} = req.body;
-      connection.query(sql,[email, mobile], (err, results)=>{
-      //console.log("result",results)
-        if (err) throw err
-        if(Object.keys(results).length > 0 ){
-        check.emailorphonenotvalid = "This email or number is already exits";
+        check.emailnotvalid = "This email is already exits";
         res.render('add',{
-          results:req.body,
+          results: req.body,
           errors : check
-        },);
-      }*!/
-      /!*else {
-      const sql = "select * from details where mobile = ?"
-      connection.query(sql,req.body.mobile,(err, results)=>{
-      if (err) throw err
-      if(Object.keys(results).length > 0 ){
-      checknumber.numbernotvalid = "This mobile is already exits";
-      res.render('add',{
-        results: req.body,
-        errors : checknumber
-      });
-    }*!/
-        else {
-        //data.image = req.file.firstname;
-        console.log("data",data.image);
+        });
+      }else{
+        data.image = req.file.filename;
         let sql = "INSERT INTO details SET ?";
-        let query = connection.query(sql, data,(err, results) => {
-          if(err) throw err;
-          res.redirect('/');
+        connection.query(sql, data, (err, results) => {
+          if (err) throw err;
+            res.redirect('/');
         });
       }
     })
+   
+    
   }
 });
-*/
+
 function checkempty(data) {
   var errors = {};
   if (data.firstname === "") {
@@ -238,7 +162,6 @@ function checkempty(data) {
   return errors;
 }
 //route for update data
-
 app.post('/edit', upload.single('image'), (req, res) => {
   //console.log("iiiiiiimages",req.file);
   var errors = {};
@@ -249,8 +172,7 @@ app.post('/edit', upload.single('image'), (req, res) => {
     lastName: req.body.lastname,
     email: req.body.email,
     password: sha1(req.body.password),
-    mobile: req.body.mobile,
-    image:req.body.filename
+    mobile: req.body.mobile
   };
   //console.log("data///////////////",req.file.filename);
   if (req.body.student_id === "" || req.body.firstname === "" || req.body.lastname === "" || req.body.email === "" || req.body.password === "" || req.body.mobile === "") {
@@ -263,25 +185,28 @@ app.post('/edit', upload.single('image'), (req, res) => {
       results: req.body,
       errors: {'email': 'please enter valid email'}
     });
-  } /*else if (!req.file) {
-    //const result = {body: req.body,file: req.file.filename};
-    //console.log("result",result)
-    res.render('edit', {
-      results: req.body,
-      errors: {'image': 'Please enter proper file'}
-    });
-  }*/ else {
-    //data.image = req.file.filename;
-    //console.log("data final", data.image);
-    const {firstName, lastName, email, password, image, mobile, student_id} = data;
-    let sql = "UPDATE details SET firstname = ?, lastname = ?, email = ?, password = ?, mobile = ?, image = ? WHERE student_id = ?";
-    connection.query(sql, firstName, lastName, email, password, image, mobile, student_id, (err, results) => {
-      //console.log("update result",results);
-      if (err) throw err;
-      res.redirect('/');
-    });
+  } else {
+    if (req.file && req.file.filename) {
+      data.image = req.file.filename;
+      const {firstName, lastName, email, password, image, mobile, student_id} = data;
+      let sql = "UPDATE details SET firstname = ?, lastname = ?, email = ?, password = ?, mobile = ?, image = ? WHERE student_id = ?";
+      connection.query(sql, [firstName, lastName, email, password,  mobile, image, student_id], (err, results) => {
+        console.log("update result",results);
+        if (err) throw err;
+        res.redirect('/');
+      });
+    }else {
+      const {firstName, lastName, email, password, mobile, student_id} = data;
+      let sql = "UPDATE details SET firstname = ?, lastname = ?, email = ?, password = ?, mobile = ? WHERE student_id = ?";
+      connection.query(sql, [firstName, lastName, email, password,  mobile, student_id], (err, results) => {
+        console.log("update result",results);
+        if (err) throw err;
+          res.redirect('/');
+      });
+    }
   }
 });
+
 //route for delete data
 app.get('/delete', (req, res) => {
   let sql = "DELETE FROM details WHERE student_id = ?";
@@ -290,7 +215,6 @@ app.get('/delete', (req, res) => {
     res.redirect('/');
   });
 });
-
 
 module.exports = app;
 
