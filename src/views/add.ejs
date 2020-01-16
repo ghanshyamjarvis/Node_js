@@ -41,7 +41,10 @@ Mobile:<input type="text" name="mobile" value="<%= results.mobile %>" id="mb"><b
 <%= errors.mobile %></span>
 <% } %>	<br>
 
-   Image: <input type="file" accept="image/*" name="image" ><br>
+   Image: <input type="file" accept="image/*" name="image" value="<%= results.image%>"><br>
+  <% if(errors.image) { %><span style="color: red;">
+    <%= errors.image %></span>
+  <% } %>	<br>
 
 <input type="submit" value="Submit">
 </form>

@@ -17,9 +17,21 @@
         <th> Delete </th>
     <tr><% results.forEach(function(result) { %></tr>
           <td><%= result.student_id %></td>
-          <td><%= result.firstname %></td> - <td><%= result.lastname %></td> - <td><%= result.email %></td> - <td><%= result.password %></td> <td><%= result.mobile %></td><td><%= result.image%></td>
-          <td><a href="/edit?student_id=<%= result.student_id %>"> Edit</a></td>
-          <td><a href="/delete?email=<%= result.email %>"> Delete</a></td>
+          <td><%= result.firstname %></td>
+          <td><%= result.lastname %></td>
+          <td><%= result.email %></td>
+          <td><%= result.password %></td>
+          <td><%= result.mobile %></td>
+          <td><%= result.image%></td>
+          <td>
+              <% if(result.image) { %>
+                  <img src="http://localhost:5000/<%= result.image%>" height="50px" width="50px">
+              <% } %>
+          </td>
+          <td>
+            <a href="/edit?student_id=<%= result.student_id %>"> Edit</a>
+           </td>
+               <td><a href="/delete?student_id=<%= result.student_id %>"> Delete</a></td>
             <% }); %>
   <a href="/add">Add</a>
 </table>

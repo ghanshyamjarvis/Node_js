@@ -8,7 +8,7 @@
 
 <h1>edit user</h1>
 
-<form name="user" method="post" action="/edit">
+<form name="user" method="post" action="/edit" enctype="multipart/form-data">
 
   Student_ID:<input type="text" name="student_id" value="<%= results.student_id %>"> <br>
   <% if(errors.student_id) { %><span style="color: red;">
@@ -47,10 +47,10 @@
   <% } %>
   <br>
 
-  Image:<input type="text" name="image" value="<%= results.image %>"> <br>
+  Image:<input type="file" name="image" accept="image/*" value="<%= results.image%>"> <b  r>
   <% if(errors.image) { %><span style="color: red;">
 <%= errors.image %></span>
-  <% } %><input type="file" accept="image/*" name="image" ><br>
+  <% } %>
   <br>
 
 
