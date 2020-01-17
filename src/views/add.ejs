@@ -1,60 +1,66 @@
 <html>
 <head>
-   <title>Crud Operaction Into Database </title>
-    <style>
+  <title>Crud Operaction Into Database </title>
+  <style>
 
-    </style>
+  </style>
 </head>
 <body>
 
 <h1>add user</h1>
 
-<form name="user" method="post" action="/add"  enctype="multipart/form-data" onsubmit="return checkEmptyInput();">
+<form name="user" method="post" action="/add" enctype="multipart/form-data" onsubmit="return checkEmptyInput();">
 
   First name:<input type="text" name="firstname" value="<%= results.firstname %>" id="fn"><br>
-<% if(errors.firstname) { %><span style="color: red;">
+  <% if(errors.firstname) { %><span style="color: red;">
 <%= errors.firstname %></span>
-<% } %>
-	<br>
+  <% } %>
+  <br>
 
-Last name:<input type="text" name="lastname" value="<%= results.lastname %>" id="ln"><br>
-<% if(errors.lastname) { %><span style="color: red;">
+  Last name:<input type="text" name="lastname" value="<%= results.lastname %>" id="ln"><br>
+  <% if(errors.lastname) { %><span style="color: red;">
 <%= errors.lastname %></span>
-<% } %>	<br>
+  <% } %>
+  <br>
 
-Email:<input type="text" name="email" value="<%= results.email %>" id ="email"> <br>
-<% if(errors.email) { %><span style="color: red;">
+  Email:<input type="text" name="email" value="<%= results.email %>" id="email"> <br>
+  <% if(errors.email) { %><span style="color: red;">
 <%= errors.email %></span>
-<% } %>
+  <% } %>
 
-<% if(errors.emailnotvalid) { %><span style="color: red;">
+  <% if(errors.emailnotvalid) { %><span style="color: red;">
 <%= errors.emailnotvalid %></span>
-<% } %>	<br>
+  <% } %>
+  <br>
 
-Password:<input type="password" name="password" value="<%= results.password %>" id="pwd"><br>
-<% if(errors.password) { %><span style="color: red;">
+  Password:<input type="password" name="password" value="<%= results.password %>" id="pwd"><br>
+  <% if(errors.password) { %><span style="color: red;">
 <%= errors.password %></span>
-<% } %>	<br>
+  <% } %>
+  <br>
 
-Mobile:<input type="text" name="mobile" value="<%= results.mobile %>" id="mb"><br>
-<% if(errors.mobile) { %><span style="color: red;">
+  Mobile:<input type="text" name="mobile" value="<%= results.mobile %>" id="mb"><br>
+  <% if(errors.mobile) { %><span style="color: red;">
 <%= errors.mobile %></span>
-<% } %>	<br>
+  <% } %>
+  <br>
 
-   Image: <input type="file" accept="image/*" name="image" value="<%= results.image%>"><br>
+  Image: <input type="file" accept="image/*" name="image" value="<%= results.image %>"><br>
   <% if(errors.image) { %><span style="color: red;">
-    <%= errors.image %></span>
-  <% } %>	<br>
+<%= errors.image %></span>
+  <% } %>
+  <br>
 
-<input type="submit" value="Submit">
+  <input type="submit" value="Submit">
 </form>
+
 <!--
 <script type="text/javascript">
-	
+
 	<% if(errors.firstname) { %>
 alert("<%= errors.firstname %>");
 <% } %>
-	
+
 function checkEmptyInput()
   {
   var isEmpty = true;
@@ -87,6 +93,7 @@ function checkEmptyInput()
 }
 </script>
 -->
+
 
 </body>
 

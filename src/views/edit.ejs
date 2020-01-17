@@ -47,15 +47,13 @@
   <% } %>
   <br>
 
-  
 
   Image:<input type="file" name="image" accept="image/*" > <br>
   <% if(results.image){ %>
-  <img src="http://localhost:5000/<%= results.image%>" height="50px" width="50px">
+  <img src="http://localhost:5000/<%= results.image%>" height="50px" width="50px"> <br>
    <%= results.image %>
   <% } %>
-
-
+  <br>
 
   <% if(errors.image) { %><span style="color: red;">
   <%= errors.image %></span>
