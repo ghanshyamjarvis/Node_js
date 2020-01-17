@@ -2,9 +2,7 @@
 <head>
    <title>Crud Operaction Into Database </title>
 </head>
-<h1>Uer list</h1>
-
-
+<h1>User list</h1>
 <table border="1">
   <tr>
     <th>Student_Id</th>
@@ -41,21 +39,12 @@
   </table>
 <a href="/add">Add</a>
 
-<!--
 
 <script>
-  var userPreference;
-
-  if (confirm("Do you want to delete?") == true) {
-    userPreference = "Deleted successfully!";
-  } else {
-    userPreference = "Cancelled!";
-  }
+  <% if(results.student_id) { %>
+  alert("<%= results.student_id %>");
+  <% } %>
 </script>
-
--->
-
-
 
 
 <!--<% if (locals.errors) { %>

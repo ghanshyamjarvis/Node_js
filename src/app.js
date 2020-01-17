@@ -66,7 +66,7 @@ app.post('/add', upload.single('image'), (req, res) => {
     password: sha1(req.body.password),
     mobile: req.body.mobile,
   };
-   errors = checkempty(req.body);
+  errors = checkempty(req.body);
   if (req.body.firstname === "" || req.body.lastname === "" || req.body.email === "" || req.body.password === "" || req.body.mobile === "" || req.body.image === "") {
     res.render('add', {
       results: req.body,
@@ -140,7 +140,8 @@ function checkempty(data) {
   }
   if (data.mobile === "") {
     errors.mobile = "Please enter mobile";
-  }return errors;
+  }
+  return errors;
 }
 
 //route for update data
@@ -155,7 +156,6 @@ app.post('/edit', upload.single('image'), (req, res) => {
     password: sha1(req.body.password),
     mobile: req.body.mobile
   };
-  //console.log("data///////////////",req.file.filename);
   if (req.body.student_id === "" || req.body.firstname === "" || req.body.lastname === "" || req.body.email === "" || req.body.password === "" || req.body.mobile === "") {
     res.render('edit', {
       results: req.body,
@@ -211,6 +211,5 @@ app.get('/delete', (req, res) => {
   });
 });
 module.exports = app;
-
 //https://medium.com/@nitinpatel_20236/image-upload-via-nodejs-server-3fe7d3faa642
 //https://www.youtube.com/watch?v=zyHkexA4ZBw
