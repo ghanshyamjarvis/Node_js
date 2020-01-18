@@ -1,0 +1,49 @@
+<html>
+<head>
+  <title>
+
+  </title>
+</head>
+<body>
+<h1> Update Details</h1>
+<form name="user" method="post" action="/edit" enctype="multipart/form-data">
+
+  id:<input type="text" name="id" value="<%= results.id %>"> <br>
+  <% if(errors.id) { %><span style="color: red;">
+      <%= errors.id %></span>
+  <% } %>
+  <br>
+
+  name:<input type="text" name="name" value="<%= results.name %>"> <br>
+  <% if(errors.name) { %><span style="color: red;">
+     <%= errors.name %></span>
+  <% } %>
+  <br>
+
+  email:<input type="text" name="email" value="<%= results.email %>"> <br>
+  <% if(errors.email) { %><span style="color: red;">
+     <%= errors.email %></span>
+  <% } %>
+  <br>
+
+  password:<input type="password" name="password" value="<%= results.password %>"> <br>
+  <% if(errors.password) { %><span style="color: red;">
+     <%= errors.password %></span>
+  <% } %>
+  <br>
+
+  mobile:<input type="text" name="mobile" value="<%= results.mobile %>"> <br>
+  <% if(errors.mobile) { %><span style="color: red;">
+     <%= errors.mobile %></span>
+  <% } %>
+  <br>
+
+  Image:<input type="file" name="image" accept="image/*"> <br>
+  <% if(results.image){ %>
+    <img src="http://localhost:5000/<%= results.image %>" height="50px" width="50px"> <br>
+    <%= results.image %>
+  <% } %>
+  <button type="submit">Save</button>
+</form>
+</body>
+</html>

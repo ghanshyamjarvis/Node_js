@@ -1,0 +1,40 @@
+<html>
+<head>
+  <title>
+    Inserted List
+  </title>
+</head>
+<body>
+<h1>Inserted Data</h1>
+
+<form name="user" method="post" action="/add" enctype="multipart/form-data" onsubmit="return checkEmptyInput();">
+
+  name:<input type="text" name="name" value="<%= results.name%>"> <br>
+  <% if(errors.name) { %><span style="color: red;">
+     <%= errors.name %></span>
+  <% } %>
+  <br>
+   email:<input type="text" name="email" value="<%= results.email%>"><br>
+  <% if(errors.email) { %><span style="color: red;">
+      <%= errors.email %></span>
+  <% } %>
+  <br>
+  password:<input type="text" name="password" value="<%= results.password%>"><br>
+  <% if(errors.password) { %><span style="color: red;">
+      <%= errors.password %></span>
+  <% } %>
+  <br>
+  mobile: <input type="text" value="<%= results.mobile%>"><br>
+  <% if(errors.mobile) { %><span style="color: red;">
+      <%= errors.mobile %></span>
+  <% } %>
+  <br>
+  image: <input type="file" accept="image/*" name="image" value="<%= results.image %>"><br>
+  <% if(errors.image) { %><span style="color: red;">
+     <%= errors.image %></span>
+  <% } %>
+  <br>
+  <input type="submit" value="Submit">
+</form>
+</body>
+</html>

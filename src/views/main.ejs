@@ -1,0 +1,41 @@
+<html>
+<head>
+  <title>
+    Staff List
+  </title>
+</head>
+<body>
+<h1>STAFF LIST</h1>
+<table border="1">
+  <tr>
+    <th>id</th>
+    <th>name</th>
+    <th>email</th>
+    <th>password</th>
+    <th>mobile</th>
+    <th>image</th>
+    <th>update</th>
+    <th>delete</th>
+  </tr>
+
+  <tr>
+    <% results.forEach(function(result) { %>
+      <td><%= result.id%></td>
+      <td><%= result.name%></td>
+      <td><%= result.email%></td>
+      <td><%= result.password%></td>
+      <td><%= result.mobile%></td>
+      <td><%= result.image%></td>
+      <td>
+        <a href="/edit?id=<%= result.id %>"> Edit</a>
+      </td>
+      <td>
+        <a href="/delete?id=<%= result.id %>"> Delete</a>
+      </td>
+    <% }); %>
+  </tr>
+
+  <a href="/add">Add</a>
+</table>
+</body>
+</html>
