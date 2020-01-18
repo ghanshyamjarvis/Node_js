@@ -1,0 +1,13 @@
+
+create database staff;
+
+CREATE TABLE `staff_details` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  `address` VARCHAR(45) NULL,
+  `email` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NULL,
+  `mobile` VARCHAR(45) NULL,
+  `image` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`));
+
