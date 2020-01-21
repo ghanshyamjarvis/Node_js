@@ -11,5 +11,6 @@ router.use(function (req, res, next) {
   next(); // make sure we go to the next routes and don't stop here
 });
 
-app.use =('/user', require('./controllers/app_route'));
+
+app.use =('/', require('./controllers/app_route'));
 module.exports = app;
