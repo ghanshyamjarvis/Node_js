@@ -1,5 +1,7 @@
+
 const connection = require ('../models/db');
 const UserModel = require('../models/app_model');
+
 
 module.exports={
 
@@ -23,9 +25,19 @@ module.exports={
   },
 
   index: function (req, res) {
+    var obj = {};
     res.render('index',{
+      title:'Express'
+
 
     });
   },
 
 }
+
+
+
+
+
+
+

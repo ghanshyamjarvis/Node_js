@@ -1,7 +1,16 @@
-const express = require("express");
+
+const express = require('express');
 const router = express.Router();
 const app = express();
-const connection =require("./models/db");
+const bodyParser = require('body-parser');
+const connection = require('./models/db');
+const path = require('path');
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 router.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -12,5 +21,7 @@ router.use(function (req, res, next) {
 });
 
 
-app.use =('/', require('./controllers/app_route'));
+
+app.use('/', require('./controllers/app_route.js'));
+
 module.exports = app;
