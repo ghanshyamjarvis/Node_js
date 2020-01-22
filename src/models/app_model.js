@@ -3,16 +3,16 @@ const connection = require('../models/db');
 
 module.exports={
 
-  checkrecordstate: function (country_id) {
+  recordState: function (countryId) {
     return new Promise((resolve) => {
       const sql = 'select * from tbl_states where country_id = ?';
-      connection.query(sql, [country_id], (error, data) => {
+      connection.query(sql, [countryId], (error, data) => {
         resolve((error) ? [] : (data == null) ? [] : data);
       })
     })
   },
 
-  checkrecordcountry: function () {
+  recordCountry: function () {
     return new Promise((resolve) => {
       const sql = 'select * from tbl_countries';
       connection.query(sql, (error, data) => {
@@ -21,14 +21,12 @@ module.exports={
     })
   },
 
-  checkrecordcities: function (state_id) {
+  recordCities: function (stateId) {
     return new Promise((resolve) => {
       const sql = 'select * from tbl_cities where state_id = ?';
-      connection.query(sql, [state_id],(error, data) => {
+      connection.query(sql, [stateId],(error, data) => {
         resolve((error) ? [] : (data == null) ? [] : data);
       })
     })
   },
-
-
 }
