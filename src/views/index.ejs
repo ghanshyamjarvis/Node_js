@@ -1,6 +1,6 @@
 <html>
 <head>
-  <script>
+ <!-- <script>
 
     function random_function()
     {
@@ -27,8 +27,7 @@
       }
       document.getElementById("output").innerHTML=string;
     }
-
-    /*var ajax =  new XMLHttpRequest();
+    var ajax =  new XMLHttpRequest();
     var method = "GET";
     var url = "getallcountry";
     var asynchronous = true;
@@ -45,14 +44,80 @@
            alert(this.responseText)
         }
     }
-
-*/
-</script>
+</script>-->
 </head>
 <body>
 <h1><%= title %></h1>
+<select id="country" onchange="getstate()"> </select>
+<select id="state" onchange="getcities()"> </select>
+<select id="cities"> </select>
+<script>
+          document.addEventListener("DOMContentLoaded", function (event) {
+             var ajax = new XMLHttpRequest();
+             var method = "GET";
+             var url = "http://localhost:5000/getallcountry";
+             var asynchronous = true;
+             ajax.open(method, url, asynchronous);
+             ajax.send();
+           ajax.onreadystatechange = function () {
+             if (this.readyState == 4 && this.status == 200) {
+             console.log(typeof this.responseText);
+             var resData = JSON.parse(this.responseText);
+             var data = resData.data;
+             var string = "<option value=''></option>";
+              data.forEach(function (item) {
+               string = string + "<option value=" + item.id + ">" + item.name + "</option>";
+              })
+              document.getElementById('country').innerHTML = string;
+             }
+           }
+          });
+          function getstate() {
+           var x = document.getElementById("country").value;
+           var ajax =  new XMLHttpRequest();
+           var method = "GET";
+           var url = "http://localhost:5000/getallstate/"+ x;
+           var asynchronous = true;
+           ajax.open(method,url,asynchronous);
+           ajax.send();
+           ajax.onreadystatechange = function (){
+            if (this.readyState == 4 && this.status == 200){
+              console.log(typeof this.responseText);
+              var resData = JSON.parse(this.responseText);
+              var data = resData.data;
+              var string = "<option value=''></option>";
+               data.forEach (function(item){
+                string = string+"<option value="+item.id+">"+item.name+"</option>" ;
+               })
+              document.getElementById('state').innerHTML=string;
+            }
+           }
+          }
+          function getcities() {
+           var x = document.getElementById("state").value;
+           var ajax =  new XMLHttpRequest();
+           var method = "GET";
+           var url = "http://localhost:5000/getallcities/"+ x;
+           var asynchronous = true;
+           ajax.open(method,url,asynchronous);
+           ajax.send();
+           ajax.onreadystatechange = function (){
+             if (this.readyState == 4 && this.status == 200) {
+               console.log(typeof this.responseText);
+               var resData = JSON.parse(this.responseText);
+               var data = resData.data;
+               var string = "<option value=''></option>";
+                 data.forEach (function(item){
+                  string = string+"<option value="+item.id+">"+item.name+"</option>" ;
+                 })
+               document.getElementById('cities').innerHTML=string;
+             }
+           }
+          }
 
-<select id="input" onchange="random_function()">
+</script>
+
+<!--<select id="input" onchange="random_function()">
   <option>select option</option>
   <option>COUNTRY</option>
   <option>STATE</option>
@@ -62,10 +127,7 @@
 <div>
   <select id="output">
   </select>
-</div>
+</div>-->
 </body>
 </html>
-<!--
-https://jsfiddle.net/patelriki13/m1ezs70o/
-https://www.youtube.com/watch?v=jMnpET38HJc
--->
+

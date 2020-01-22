@@ -8,9 +8,5 @@ router.get('/getallcountry', UserAction.getallcountry);
 router.get('/getallcities/:state_id', UserAction.getallcities);
 router.get('/',UserAction.index)
 
-router.get('/',function (req,res,next) {
-
-  res.render('index',{ title: 'getallcountry'});
-});
 
 module.exports = router;
