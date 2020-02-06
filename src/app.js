@@ -15,7 +15,8 @@ router.use(function (req, res, next) {
   next(); // make sure we go to the next routes and don't stop here
 });
 
-router.use('/user', require('./controllers/userController'));
+//router.use('/user', require('./controllers/userController'));
+router.use('/join', require('./controllers/joincontroller'));
 
 app.use('/api', router);
 
