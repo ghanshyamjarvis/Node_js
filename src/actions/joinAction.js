@@ -19,8 +19,11 @@ module.exports = {
     })
   },
   crossJoin: function (req, res) {
-    JoinModal.crossJoinTble().then(async (results) => {
+    const {query:page} =req
+    JoinModal.crossJoinTble(page).then(async (results) => {
       res.json({status: true, message: "Cross Join Done", data: results})
     })
   }
 }
+
+//https://www.digitalaholic.com/nodejs-pagination/

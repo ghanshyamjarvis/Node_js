@@ -30,10 +30,14 @@ module.exports = {
       })
     })
   },
-  crossJoinTble: function () {
+  crossJoinTble: function (page) {
+    const limit = 5;
+    page = page * limit;
+    console.log("page",page);
     return new Promise((resolve) => {
-      const sql = ``;
+      const sql = `select m.firstname, mo.title  from ${members} m cross join ${movies} mo LIMIT ${limit} OFFSET ${page}`;
       connection.query(sql, (err, data) => {
+        console.log("data model",data)
         resolve((err) ? [] : (data == null) ? [] : data)
       })
     })
