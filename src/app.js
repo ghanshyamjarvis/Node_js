@@ -3,7 +3,8 @@ const router = express.Router();
 const app = express();
 const connection =require("./models/db");
 const imagemin = require('imagemin');
-const imageminJpegtran = require('imagemin-jpegtran');
+//const imageminJpegtran = require('imagemin-jpegtran');
+const imageminmozjpeg = require('imagemin-mozjpeg');
 const imageminPngquant = require('imagemin-pngquant');
 
 
@@ -11,10 +12,8 @@ const imageminPngquant = require('imagemin-pngquant');
   const files = await imagemin(['src/images/*.{jpg,png}'], {
     destination: 'build/images',
     plugins: [
-      imageminJpegtran(),
-      imageminPngquant({
-        quality: [0.1, 0.2]
-      })
+      imageminmozjpeg({quality: [40, 60]}),
+      //imageminPngquant({quality: [0.1, 0.2]})
     ]
   });
 
